@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginEnd="1dp"
+    android:layout_marginStart="1dp"
+    android:layout_marginTop="1dp"
+    android:elevation="1dp"
+    app:cardCornerRadius="0dp">
+
+
+    <android.support.constraint.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ImageView
+            android:id="@+id/thumbnail_image_view"
+            android:layout_width="0dp"
+            android:layout_height="80dp"
+            android:layout_marginBottom="@dimen/padding_medium"
+            android:layout_marginStart="@dimen/padding_medium"
+            android:layout_marginTop="@dimen/padding_medium"
+            android:contentDescription="@string/cover_image"
+            android:scaleType="centerCrop"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintDimensionRatio="2:3"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@drawable/sample_thumbnail"
+            android:background="#EEEEEE"/>
+
+        <TextView
+            android:id="@+id/title_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="32dp"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxEms="14"
+            android:maxLines="1"
+            android:paddingStart="@dimen/padding_medium"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
+            android:textSize="14sp"
+            app:layout_constraintStart_toEndOf="@id/thumbnail_image_view"
+            tools:text="Android Development" />
+
+        <TextView
+            android:id="@+id/author_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="16dp"
+            android:ellipsize="end"
+            android:gravity="bottom"
+            android:maxEms="15"
+            android:maxLines="1"
+            android:paddingStart="@dimen/padding_medium"
+            android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+            android:textSize="12sp"
+            app:layout_constraintStart_toEndOf="@id/thumbnail_image_view"
+            app:layout_constraintTop_toBottomOf="@+id/title_text_view"
+            tools:text="There're some authors" />
+
+    </android.support.constraint.ConstraintLayout>
+
+</android.support.v7.widget.CardView>

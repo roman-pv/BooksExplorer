@@ -1,0 +1,6 @@
+<resources>
+    <string name="app_name">BooksExplorer</string>
+    <string name="search">Search books</string>
+    <string name="search_action">Search Action</string>
+    <string name="cover_image">Cover image</string>
+</resources>
