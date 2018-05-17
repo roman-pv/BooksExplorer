@@ -9,4 +9,5 @@
     android:layout_alignParentTop="true"
     android:background="@color/colorPrimary"
     android:elevation="4dp"
-    app:titleTextColor="@color/colorTextPrimary" />
+    app:layout_scrollFlags="scroll|enterAlways"
+    app:titleTextColor="@android:color/black" />

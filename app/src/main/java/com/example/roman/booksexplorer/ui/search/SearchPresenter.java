@@ -15,7 +15,7 @@ import io.reactivex.schedulers.Schedulers;
 
 public class SearchPresenter implements SearchContract.Presenter {
 
-    private String TAG = "SearchPresenter";
+    private String TAG = SearchPresenter.class.getSimpleName();
     private SearchContract.View searchView;
     private BooksRepository mBooksRepository;
     private Disposable mDisposable;
@@ -34,7 +34,7 @@ public class SearchPresenter implements SearchContract.Presenter {
     @Override
     public void getResultsBasedOnQuery(String query) {
 
-        //searchView.setLoadingIndicator(true);
+        searchView.setProgressBar(true);
         mDisposable = mBooksRepository.fetchBooks(query)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
@@ -54,11 +54,9 @@ public class SearchPresenter implements SearchContract.Presenter {
 
                     @Override
                     public void onNext(BooksList books) {
-                        //searchView.setLoadingIndicator(false);
+                        searchView.setProgressBar(false);
                         //Log.d(TAG, movies.size() + " was fetched from MovieDb service");
-
                         searchView.displayResult(books);
-
                     }
                 });
     }

@@ -8,6 +8,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.roman.booksexplorer.BooksUtils;
 import com.example.roman.booksexplorer.R;
 import com.example.roman.booksexplorer.data.model.Book;
 import com.squareup.picasso.Picasso;
@@ -27,15 +28,12 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksAdapter
 
     private Picasso mPicasso;
 
-    public BooksAdapter(Context context, Picasso picasso) {
+    public BooksAdapter(Context context,
+                        BooksAdapterOnItemClickHandler onItemClickHandler, Picasso picasso) {
         this.mContext = context;
+        this.mClickHandler = onItemClickHandler;
         this.mPicasso = picasso;
     }
-
-    public void setOnItemClickHandler(BooksAdapterOnItemClickHandler onItemClickHandler) {
-        this.mClickHandler = onItemClickHandler;
-    }
-
 
     @Override
     public BooksAdapter.BooksAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
@@ -51,22 +49,22 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksAdapter
         Book currentBook = mBooks.get(position);
 
         String title = currentBook.getVolumeInfo().getTitle();
+        holder.titleTextView.setText(title);
 
-        if (currentBook.getVolumeInfo().getAuthors() != null) {
-            String author = currentBook.getVolumeInfo().getAuthors().get(0);
-            holder.authorTextView.setText(author);
+        List<String> authorsList = currentBook.getVolumeInfo().getAuthors();
+        if (authorsList != null && authorsList.size() > 0) {
+            String authors = BooksUtils.formatStringList(authorsList, true);
+            holder.authorTextView.setText(authors);
         }
 
         if (currentBook.getVolumeInfo().getImageLinks() != null) {
-            String thumbnailUrl = currentBook.getVolumeInfo().getImageLinks().getSmallThumbnail();
+            String thumbnailUrl = currentBook.getVolumeInfo().getImageLinks().getThumbnail();
 
-            mPicasso.with(mContext)
-                    .load(thumbnailUrl)
+            mPicasso.load(thumbnailUrl)
                     .into(holder.thumbnailImageView);
         }
 
 
-        holder.titleTextView.setText(title);
 
     }
 

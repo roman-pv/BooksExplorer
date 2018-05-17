@@ -10,8 +10,7 @@ public interface SearchContract {
         void showToast(String str);
         void displayResult(BooksList booksList);
         void displayError(String s);
-//        void showProgressBar();
-//        void hideProgressBar();
+        void setProgressBar(Boolean isVisible);
     }
 
     interface Presenter {

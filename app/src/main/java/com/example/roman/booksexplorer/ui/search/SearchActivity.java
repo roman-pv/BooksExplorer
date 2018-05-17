@@ -1,7 +1,9 @@
 package com.example.roman.booksexplorer.ui.search;
 
+import android.app.ActivityOptions;
 import android.app.SearchManager;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.support.v7.app.AppCompatActivity;
@@ -9,9 +11,10 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ProgressBar;
 import android.widget.SearchView;
 import android.widget.Toast;
 
@@ -19,6 +22,7 @@ import com.example.roman.booksexplorer.R;
 import com.example.roman.booksexplorer.data.model.Book;
 import com.example.roman.booksexplorer.data.model.BooksList;
 import com.example.roman.booksexplorer.ui.BooksAdapter;
+import com.example.roman.booksexplorer.ui.details.DetailsActivity;
 import com.squareup.picasso.Picasso;
 
 import javax.inject.Inject;
@@ -37,17 +41,20 @@ public class SearchActivity extends AppCompatActivity
     private static final String QUERY_KEY =
             "com.example.roman.booksexplorer.ui.search.query";
 
-    @BindView(R.id.toolbar)
-    Toolbar toolbar;
-
-    @BindView(R.id.results_recycler_view)
-    RecyclerView resultsRecyclerView;
-
     @Inject
     Picasso mPicasso;
 
     @Inject
     SearchPresenter mSearchPresenter;
+
+    @BindView(R.id.toolbar)
+    Toolbar mToolbar;
+
+    @BindView(R.id.results_recycler_view)
+    RecyclerView mResultsRecyclerView;
+
+    @BindView(R.id.loading_progress_bar)
+    ProgressBar mLoadingProgressBar;
 
     private SearchView mSearchView;
     private BooksAdapter mAdapter;
@@ -64,18 +71,16 @@ public class SearchActivity extends AppCompatActivity
         ButterKnife.bind(this);
         setupViews();
         setupPresenter();
-
-
     }
 
     private void setupViews() {
 
-        setSupportActionBar(toolbar);
+        setSupportActionBar(mToolbar);
         mLayoutManager = new LinearLayoutManager(this);
-        resultsRecyclerView.setLayoutManager(mLayoutManager);
+        mResultsRecyclerView.setLayoutManager(mLayoutManager);
 
-        mAdapter = new BooksAdapter(this, mPicasso);
-        resultsRecyclerView.setAdapter(mAdapter);
+        mAdapter = new BooksAdapter(this, this, mPicasso);
+        mResultsRecyclerView.setAdapter(mAdapter);
 
     }
 
@@ -96,11 +101,18 @@ public class SearchActivity extends AppCompatActivity
         mSearchView.setSearchableInfo(searchManager
                 .getSearchableInfo(getComponentName()));
 
+//        mSearchView.setOnCloseListener(() -> {
+//            mSearchPresenter.unsubscribe();
+//            return false;
+//        });
+
         mSearchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
 
             @Override
             public boolean onQueryTextSubmit(String query) {
-                mQuery = query;
+                if (!query.equals(mQuery)) {
+                    mQuery = query;
+                }
                 mSearchView.clearFocus();
                 mSearchPresenter.getResultsBasedOnQuery(mQuery);
                 return true;
@@ -150,8 +162,19 @@ public class SearchActivity extends AppCompatActivity
     }
 
     @Override
-    public void onItemClick(Book book) {
+    public void setProgressBar(Boolean isVisible) {
+        if (isVisible) {
+            mLoadingProgressBar.setVisibility(View.VISIBLE);
+        } else {
+            mLoadingProgressBar.setVisibility(View.GONE);
+        }
+    }
 
+    @Override
+    public void onItemClick(Book book) {
+        Intent startDetailsActivityIntent = new Intent(this, DetailsActivity.class);
+        startDetailsActivityIntent.putExtra("book", book);
+         startActivity(startDetailsActivityIntent);
     }
 
     @Override
@@ -167,7 +190,7 @@ public class SearchActivity extends AppCompatActivity
         super.onRestoreInstanceState(savedInstanceState);
         mQuery = savedInstanceState.getString(QUERY_KEY);
         mLayoutState = savedInstanceState.getParcelable(LAYOUT_STATE_KEY);
-    }
+        }
 
     @Override
     protected void onStop() {
