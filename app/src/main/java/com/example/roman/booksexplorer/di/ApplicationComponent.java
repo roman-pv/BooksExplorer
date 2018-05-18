@@ -10,12 +10,17 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjector;
 
+/**
+ * Dagger component, mapping the modules with dependencies.
+ */
 @Singleton
 @Component(modules = {
         ApplicationModule.class,
-        DataModule.class,
+        NetworkModule.class,
         ActivityBuilder.class})
-public interface ApplicationComponent extends AndroidInjector<BooksApp>{
+public interface ApplicationComponent extends AndroidInjector<BooksApp> {
+
+    void inject(BooksApp app);
 
     @Component.Builder
     interface Builder {
@@ -24,7 +29,5 @@ public interface ApplicationComponent extends AndroidInjector<BooksApp>{
 
         ApplicationComponent build();
     }
-
-    void inject(BooksApp app);
 
 }

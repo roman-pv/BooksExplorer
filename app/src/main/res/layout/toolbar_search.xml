@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="?attr/actionBarSize"
     android:layout_alignParentTop="true"
-    android:background="@color/colorTextPrimary"
+    android:background="@color/colorTextLightPrimary"
     android:elevation="4dp"
     app:collapseIcon="@drawable/ic_arrow_back"
-    app:titleTextColor="@color/colorPrimary" />
+    app:titleTextColor="@color/colorPrimaryDark" />

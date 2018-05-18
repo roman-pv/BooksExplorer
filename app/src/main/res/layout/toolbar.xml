@@ -9,5 +9,6 @@
     android:layout_alignParentTop="true"
     android:background="@color/colorPrimary"
     android:elevation="4dp"
-    app:layout_scrollFlags="scroll|enterAlways"
-    app:titleTextColor="@android:color/black" />
+    app:titleTextColor="@android:color/white"
+    app:theme="@style/ToolbarStyle"
+    />

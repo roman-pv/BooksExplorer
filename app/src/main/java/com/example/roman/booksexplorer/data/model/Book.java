@@ -4,11 +4,24 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * POJO containing subclass with an informatioon about a book.
+ * POJO containing subclass with an information about a book.
  */
 public class Book implements Parcelable {
 
+    public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>() {
+        public Book createFromParcel(Parcel in) {
+            return new Book(in);
+        }
+
+        public Book[] newArray(int size) {
+            return new Book[size];
+        }
+    };
     private VolumeInfo volumeInfo;
+
+    public Book(Parcel in) {
+        this.volumeInfo = in.readParcelable(VolumeInfo.class.getClassLoader());
+    }
 
     public VolumeInfo getVolumeInfo() {
         return volumeInfo;
@@ -27,18 +40,4 @@ public class Book implements Parcelable {
     public void writeToParcel(Parcel out, int flags) {
         out.writeParcelable(volumeInfo, flags);
     }
-
-    public Book(Parcel in) {
-        this.volumeInfo = in.readParcelable(VolumeInfo.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<Book> CREATOR = new Parcelable.Creator<Book>(){
-        public Book createFromParcel(Parcel in) {
-            return new Book(in);
-        }
-
-        public Book[] newArray(int size) {
-            return new Book[size];
-        }
-    };
 }

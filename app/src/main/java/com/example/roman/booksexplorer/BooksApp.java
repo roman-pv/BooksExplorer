@@ -10,6 +10,9 @@ import javax.inject.Inject;
 import dagger.android.DispatchingAndroidInjector;
 import dagger.android.HasActivityInjector;
 
+/**
+ * Application class, code here allows to build dependency graph.
+ */
 public class BooksApp extends Application implements HasActivityInjector {
 
     @Inject

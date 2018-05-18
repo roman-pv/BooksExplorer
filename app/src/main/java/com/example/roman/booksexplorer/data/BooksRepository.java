@@ -1,15 +1,18 @@
 package com.example.roman.booksexplorer.data;
 
-import com.example.roman.booksexplorer.data.model.BooksList;
+import com.example.roman.booksexplorer.data.model.RetrievedBooks;
 import com.example.roman.booksexplorer.data.network.GoogleBooksApi;
-
-import java.io.IOException;
 
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import io.reactivex.Observable;
 
+/**
+ * The class that is a single point of access to the Model for the Presenter.
+ * Allows to fetch requested information from any resource.
+ * Currently it's only web-download with Retrofit.
+ */
 @Singleton
 public class BooksRepository {
 
@@ -21,7 +24,7 @@ public class BooksRepository {
     }
 
 
-    public Observable<BooksList> fetchBooks(final String query) {
+    public Observable<RetrievedBooks> fetchBooks(final String query) {
         return booksApi.getBooksInformation(query, GoogleBooksApi.MAX_RESULTS);
 
     }

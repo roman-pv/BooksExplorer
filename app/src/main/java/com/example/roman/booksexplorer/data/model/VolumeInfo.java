@@ -10,20 +10,43 @@ import java.util.List;
  * POJO with an information about a book.
  */
 public class VolumeInfo implements Parcelable {
+    public static final Parcelable.Creator<VolumeInfo> CREATOR = new Parcelable.Creator<VolumeInfo>() {
+        public VolumeInfo createFromParcel(Parcel in) {
+            return new VolumeInfo(in);
+        }
+
+        public VolumeInfo[] newArray(int size) {
+            return new VolumeInfo[size];
+        }
+    };
     private String title;
     private String subtitle;
     private List<String> authors;
     private String publisher;
     private String description;
     private ImageLinks imageLinks;
+    private String infoLink;
 
-    public VolumeInfo(String title, String subtitle, List<String> authors, String publisher, String description, ImageLinks imageLinks) {
+    public VolumeInfo(String title, String subtitle, List<String> authors, String publisher,
+                      String description, ImageLinks imageLinks, String infoLink) {
         this.title = title;
         this.subtitle = subtitle;
         this.authors = authors;
         this.publisher = publisher;
         this.description = description;
         this.imageLinks = imageLinks;
+        this.infoLink = infoLink;
+    }
+
+    public VolumeInfo(Parcel in) {
+        this.title = in.readString();
+        this.subtitle = in.readString();
+        authors = new ArrayList<>();
+        in.readStringList(this.authors);
+        this.publisher = in.readString();
+        this.description = in.readString();
+        this.imageLinks = in.readParcelable(ImageLinks.class.getClassLoader());
+        this.infoLink = in.readString();
     }
 
     public String getTitle() {
@@ -74,6 +97,14 @@ public class VolumeInfo implements Parcelable {
         this.imageLinks = imageLinks;
     }
 
+    public String getInfoLink() {
+        return infoLink;
+    }
+
+    public void setInfoLink(String infoLink) {
+        this.infoLink = infoLink;
+    }
+
     @Override
     public int describeContents() {
         return 0;
@@ -87,25 +118,6 @@ public class VolumeInfo implements Parcelable {
         out.writeString(publisher);
         out.writeString(description);
         out.writeParcelable(imageLinks, flags);
+        out.writeString(infoLink);
     }
-
-    public VolumeInfo(Parcel in) {
-        this.title = in.readString();
-        this.subtitle = in.readString();
-        authors = new ArrayList<>();
-        in.readStringList(this.authors);
-        this.publisher = in.readString();
-        this.description = in.readString();
-        this.imageLinks = in.readParcelable(ImageLinks.class.getClassLoader());
-    }
-
-    public static final Parcelable.Creator<VolumeInfo> CREATOR = new Parcelable.Creator<VolumeInfo>(){
-        public VolumeInfo createFromParcel(Parcel in) {
-            return new VolumeInfo(in);
-        }
-
-        public VolumeInfo[] newArray(int size) {
-            return new VolumeInfo[size];
-        }
-    };
 }

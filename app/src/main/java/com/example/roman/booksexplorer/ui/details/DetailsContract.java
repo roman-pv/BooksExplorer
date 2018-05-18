@@ -10,10 +10,9 @@ public interface DetailsContract {
 
         void openBookInfoInBrowser(Book book);
 
-    }
+        void displayError(int messageResourceId);
 
-    interface Presenter {
+        void showSnackbar(String message);
 
-        void loadBook();
     }
 }

@@ -8,6 +8,9 @@ import javax.inject.Singleton;
 import dagger.Binds;
 import dagger.Module;
 
+/**
+ * Provides application and application context.
+ */
 @Module
 public interface ApplicationModule {
 

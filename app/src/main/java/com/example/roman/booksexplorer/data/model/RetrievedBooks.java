@@ -10,12 +10,25 @@ import java.util.List;
 /**
  * POJO for a downloaded JSON with list of books.
  */
-public class BooksList implements Parcelable{
+public class RetrievedBooks implements Parcelable {
+    public static final Parcelable.Creator<RetrievedBooks> CREATOR = new Parcelable.Creator<RetrievedBooks>() {
+        public RetrievedBooks createFromParcel(Parcel in) {
+            return new RetrievedBooks(in);
+        }
+
+        public RetrievedBooks[] newArray(int size) {
+            return new RetrievedBooks[size];
+        }
+    };
     @SerializedName("items")
     private List<Book> books;
 
-    public BooksList(List<Book> books) {
+    public RetrievedBooks(List<Book> books) {
         this.books = books;
+    }
+
+    public RetrievedBooks(Parcel in) {
+        in.readTypedList(this.books, Book.CREATOR);
     }
 
     public List<Book> getBooks() {
@@ -35,18 +48,4 @@ public class BooksList implements Parcelable{
     public void writeToParcel(Parcel out, int flags) {
         out.writeTypedList(books);
     }
-
-    public BooksList(Parcel in) {
-        in.readTypedList(this.books, Book.CREATOR);
-    }
-
-    public static final Parcelable.Creator<BooksList> CREATOR = new Parcelable.Creator<BooksList>(){
-        public BooksList createFromParcel(Parcel in) {
-            return new BooksList(in);
-        }
-
-        public BooksList[] newArray(int size) {
-            return new BooksList[size];
-        }
-    };
 }

@@ -27,7 +27,7 @@
                 android:resource="@xml/searchable" />
         </activity>
         <activity android:name=".ui.details.DetailsActivity"
-
+            android:label="@string/details_activity"
             android:parentActivityName=".ui.search.SearchActivity">
 
         </activity>

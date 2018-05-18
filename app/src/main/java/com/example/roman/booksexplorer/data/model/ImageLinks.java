@@ -7,12 +7,26 @@ import android.os.Parcelable;
  * POJO for images of a cover.
  */
 public class ImageLinks implements Parcelable {
+    public static final Parcelable.Creator<ImageLinks> CREATOR = new Parcelable.Creator<ImageLinks>() {
+        public ImageLinks createFromParcel(Parcel in) {
+            return new ImageLinks(in);
+        }
+
+        public ImageLinks[] newArray(int size) {
+            return new ImageLinks[size];
+        }
+    };
     private String smallThumbnail;
     private String thumbnail;
 
     public ImageLinks(String smallThumbnail, String thumbnail) {
         this.smallThumbnail = smallThumbnail;
         this.thumbnail = thumbnail;
+    }
+
+    public ImageLinks(Parcel in) {
+        this.smallThumbnail = in.readString();
+        this.thumbnail = in.readString();
     }
 
     public String getSmallThumbnail() {
@@ -41,19 +55,4 @@ public class ImageLinks implements Parcelable {
         out.writeString(smallThumbnail);
         out.writeString(thumbnail);
     }
-
-    public ImageLinks(Parcel in) {
-        this.smallThumbnail = in.readString();
-        this.thumbnail = in.readString();
-    }
-
-    public static final Parcelable.Creator<ImageLinks> CREATOR = new Parcelable.Creator<ImageLinks>(){
-        public ImageLinks createFromParcel(Parcel in) {
-            return new ImageLinks(in);
-        }
-
-        public ImageLinks[] newArray(int size) {
-            return new ImageLinks[size];
-        }
-    };
 }

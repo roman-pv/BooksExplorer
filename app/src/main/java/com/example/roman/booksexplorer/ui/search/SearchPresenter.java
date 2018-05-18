@@ -2,8 +2,9 @@ package com.example.roman.booksexplorer.ui.search;
 
 import android.util.Log;
 
+import com.example.roman.booksexplorer.R;
 import com.example.roman.booksexplorer.data.BooksRepository;
-import com.example.roman.booksexplorer.data.model.BooksList;
+import com.example.roman.booksexplorer.data.model.RetrievedBooks;
 
 import javax.inject.Inject;
 
@@ -34,17 +35,18 @@ public class SearchPresenter implements SearchContract.Presenter {
     @Override
     public void getResultsBasedOnQuery(String query) {
 
+        searchView.setEmptyView(false);
         searchView.setProgressBar(true);
         mDisposable = mBooksRepository.fetchBooks(query)
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribeWith(new DisposableObserver<BooksList>() {
+                .subscribeWith(new DisposableObserver<RetrievedBooks>() {
 
                     @Override
                     public void onError(Throwable e) {
-                        //searchView.setLoadingIndicator(false);
+                        searchView.setProgressBar(false);
                         Log.e(TAG, e.getMessage());
-                        searchView.showToast(e.getMessage());
+                        searchView.displayError(R.string.error_loading);
                     }
 
                     @Override
@@ -53,9 +55,8 @@ public class SearchPresenter implements SearchContract.Presenter {
                     }
 
                     @Override
-                    public void onNext(BooksList books) {
+                    public void onNext(RetrievedBooks books) {
                         searchView.setProgressBar(false);
-                        //Log.d(TAG, movies.size() + " was fetched from MovieDb service");
                         searchView.displayResult(books);
                     }
                 });

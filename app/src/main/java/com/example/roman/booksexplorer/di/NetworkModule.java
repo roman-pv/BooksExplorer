@@ -2,7 +2,6 @@ package com.example.roman.booksexplorer.di;
 
 import android.content.Context;
 
-import com.example.roman.booksexplorer.BuildConfig;
 import com.example.roman.booksexplorer.data.network.GoogleBooksApi;
 import com.squareup.picasso.Picasso;
 
@@ -11,13 +10,15 @@ import javax.inject.Singleton;
 import dagger.Module;
 import dagger.Provides;
 import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
 
+/**
+ * Dagger module providing the dependencies that are connected with network functionality.
+ */
 @Module
-public class DataModule {
+public class NetworkModule {
 
     @Provides
     @Singleton

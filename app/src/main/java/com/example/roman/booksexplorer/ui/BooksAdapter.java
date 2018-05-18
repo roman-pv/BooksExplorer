@@ -8,9 +8,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.roman.booksexplorer.BooksUtils;
 import com.example.roman.booksexplorer.R;
 import com.example.roman.booksexplorer.data.model.Book;
+import com.example.roman.booksexplorer.utils.BooksUtils;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -24,21 +24,24 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksAdapter
 
     private BooksAdapterOnItemClickHandler mClickHandler;
 
+    private OverflowMenuClickHandler mMenuClickHandler;
+
     private List<Book> mBooks;
 
     private Picasso mPicasso;
 
-    public BooksAdapter(Context context,
-                        BooksAdapterOnItemClickHandler onItemClickHandler, Picasso picasso) {
+    public BooksAdapter(Context context, BooksAdapterOnItemClickHandler onItemClickHandler,
+                        OverflowMenuClickHandler menuClickHandler, Picasso picasso) {
         this.mContext = context;
         this.mClickHandler = onItemClickHandler;
+        this.mMenuClickHandler = menuClickHandler;
         this.mPicasso = picasso;
     }
 
     @Override
     public BooksAdapter.BooksAdapterViewHolder onCreateViewHolder(ViewGroup viewGroup, int viewType) {
         View view = LayoutInflater.from(mContext).inflate(
-                R.layout.recyclerview_book, viewGroup, false);
+                R.layout.recyclerview_book_item, viewGroup, false);
         view.setFocusable(true);
         return new BooksAdapterViewHolder(view);
     }
@@ -58,13 +61,15 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksAdapter
         }
 
         if (currentBook.getVolumeInfo().getImageLinks() != null) {
-            String thumbnailUrl = currentBook.getVolumeInfo().getImageLinks().getThumbnail();
+            String thumbnailUrl = currentBook.getVolumeInfo().getImageLinks().getSmallThumbnail();
 
             mPicasso.load(thumbnailUrl)
                     .into(holder.thumbnailImageView);
         }
 
-
+        // Sets up listener for a click on an overflow (pop-up) menu in a card
+        holder.overflowMenu.setOnClickListener(view ->
+                mMenuClickHandler.onOverflowMenuClick(view, currentBook));
 
     }
 
@@ -74,16 +79,26 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksAdapter
         else return mBooks.size();
     }
 
+    /**
+     * Changes the list of books in an adapter, and calls to load a new list.
+     */
     public void swapBooks(List<Book> newBooks) {
         mBooks = newBooks;
         notifyDataSetChanged();
     }
 
     /**
-     * The interface that receives onReviewItemClick messages.
+     * The interface that receives onBookItemClick messages.
      */
     public interface BooksAdapterOnItemClickHandler {
         void onItemClick(Book book);
+    }
+
+    /**
+     * The interface that receives click on overflow menu.
+     */
+    public interface OverflowMenuClickHandler {
+        void onOverflowMenuClick(View view, Book book);
     }
 
     class BooksAdapterViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
@@ -96,6 +111,9 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksAdapter
 
         @BindView(R.id.author_text_view)
         TextView authorTextView;
+
+        @BindView(R.id.overflow_menu)
+        ImageView overflowMenu;
 
         public BooksAdapterViewHolder(View view) {
 

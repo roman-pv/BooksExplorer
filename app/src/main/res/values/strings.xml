@@ -1,6 +1,16 @@
 <resources>
-    <string name="app_name">BooksExplorer</string>
-    <string name="search">Search books</string>
+    <string name="app_name">Books Explorer</string>
+    <string name="search_hint">Search books</string>
     <string name="search_action">Search Action</string>
     <string name="cover_image">Cover image</string>
+    <string name="start_searching">Explore new books!</string>
+    <string name="details_activity">Book Details</string>
+    <string name="no_browser_error">You don\'t have an app to open internet links.</string>
+    <string name="open_external_link">Open link</string>
+    <string name="share">Share</string>
+    <string name="share_dialog_title">Share your discovery!</string>
+    <string name="share_message">Interesting read:\n %1$s by %2$s. \n\n More info: %3$s</string>
+    <string name="mime_type_text">text/plain</string>
+    <string name="empty">-</string>
+    <string name="error_loading">Error loading books</string>
 </resources>

@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/overflow_menu_share"
+        android:title="@string/share" />
+    <item
+        android:id="@+id/overflow_menu_open_url"
+        android:title="@string/open_external_link" />
+</menu>

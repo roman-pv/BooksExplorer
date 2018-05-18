@@ -19,11 +19,11 @@
         <ImageView
             android:id="@+id/thumbnail_image_view"
             android:layout_width="0dp"
-            android:layout_height="80dp"
+            android:layout_height="@dimen/recycler_image_height"
             android:layout_marginBottom="@dimen/padding_medium"
             android:layout_marginStart="@dimen/padding_medium"
             android:layout_marginTop="@dimen/padding_medium"
-            android:background="#EEEEEE"
+            android:background="@color/backgroundGrey"
             android:contentDescription="@string/cover_image"
             android:scaleType="centerCrop"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -35,23 +35,22 @@
         <TextView
             android:id="@+id/title_text_view"
             android:layout_width="0dp"
-            android:layout_height="32dp"
+            android:layout_height="@dimen/recycler_large_textview_height"
             android:ellipsize="end"
             android:gravity="bottom"
             android:maxLines="1"
-            android:paddingEnd="@dimen/padding_medium"
             android:paddingStart="@dimen/padding_medium"
             android:scrollHorizontally="false"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Large"
-            android:textSize="14sp"
+            android:textSize="@dimen/recycler_text_large"
             app:layout_constraintStart_toEndOf="@id/thumbnail_image_view"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/overflow_menu"
             tools:text="Android Development" />
 
         <TextView
             android:id="@+id/author_text_view"
             android:layout_width="0dp"
-            android:layout_height="16dp"
+            android:layout_height="@dimen/reccycler_small_textview_height"
             android:ellipsize="end"
             android:maxLines="1"
             android:gravity="bottom"
@@ -59,11 +58,25 @@
             android:paddingStart="@dimen/padding_medium"
             android:scrollHorizontally="false"
             android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-            android:textSize="12sp"
+            android:textSize="@dimen/recycler_text_small"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@id/thumbnail_image_view"
             app:layout_constraintTop_toBottomOf="@+id/title_text_view"
-            tools:text="There're some authors" />
+            tools:text="Author one, author two" />
+
+        <ImageView
+            android:id="@+id/overflow_menu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingStart="@dimen/padding_small"
+            android:paddingEnd="@dimen/padding_small"
+            android:paddingTop="@dimen/padding_medium"
+            android:paddingBottom="@dimen/padding_medium"
+            android:src="@drawable/ic_overflow_menu"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:gravity="center"
+            />
 
     </android.support.constraint.ConstraintLayout>
 
