@@ -11,6 +11,6 @@
     <string name="share_dialog_title">Share your discovery!</string>
     <string name="share_message">Interesting read:\n %1$s by %2$s. \n\n More info: %3$s</string>
     <string name="mime_type_text">text/plain</string>
-    <string name="empty">-</string>
+    <string name="empty"> - </string>
     <string name="error_loading">Error loading books</string>
 </resources>

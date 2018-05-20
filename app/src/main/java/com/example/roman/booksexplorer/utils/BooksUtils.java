@@ -49,7 +49,7 @@ public class BooksUtils {
             title = bookInformation.getTitle();
         }
         String authors = context.getString(R.string.empty);
-        if (bookInformation.getAuthors() != null || bookInformation.getAuthors().size() > 0) {
+        if (bookInformation.getAuthors() != null && bookInformation.getAuthors().size() > 0) {
             authors = BooksUtils.formatStringList(bookInformation.getAuthors(), true);
         }
 
